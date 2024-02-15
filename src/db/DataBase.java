@@ -11,6 +11,7 @@ public class DataBase {
     protected static List<UserBean> users = new ArrayList<>();
     protected static List<TaskBean> tasks = new ArrayList<>();
     public static UserBean session = null;
+    public static final String passwordRegex = "^(?=.*?\\p{Upper})(?=.*?\\p{Lower})(?=.*?\\p{Digit}).{8,}";
 
 
     public static UserBean getUser(String username, String password) {
@@ -50,13 +51,6 @@ public class DataBase {
                 task.setDescription(String.valueOf(dueDate));
                 return true;
             }
-        }
-        return false;
-    }
-
-    public static boolean updateTask(boolean completed) {
-        for (TaskBean task : tasks) {
-//            if()
         }
         return false;
     }

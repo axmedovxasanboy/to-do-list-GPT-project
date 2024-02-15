@@ -94,9 +94,8 @@ public class Main {
         System.out.print("Insert new username (optional): ");
         String username = scannerNum.nextLine();
         if (username.equals("-1")) return;
-        System.out.print("Insert new password (optional): ");
-        String password = scannerNum.nextLine();
-        if (password.equals("-1")) return;
+        String password = passwordChecker();
+        if(password.equals("-1")) return;
         UserResource resource = new UserResource();
         ApiResponse response = resource.update(DataBase.session.getId(), fName, lName, username, password);
         System.out.println(response.getMessage());
@@ -258,9 +257,8 @@ public class Main {
         System.out.print("Enter your username: ");
         String username = scannerStr.nextLine();
         if (username.equals("-1")) return;
-        System.out.print("Enter your password: ");
-        String password = scannerStr.nextLine();
-        if (password.equals("-1")) return;
+        String password = passwordChecker();
+        if(password.equals("-1")) return;
 
         UserBean user = new UserBean(firstName, lastName, username, password);
 
@@ -273,14 +271,24 @@ public class Main {
 
     }
 
+    private static String passwordChecker() {
+        String password;
+        do {
+            System.out.print("Enter your password\nPassword must contain at least \n- 1 Upper letter\n- 1 Lower letter\n- 1 digit\n- 8 characters\n>>> ");
+            password = scannerStr.nextLine();
+            if (password.equals("-1")) return password;
+        } while (!password.matches(DataBase.passwordRegex));
+        return password;
+    }
+
     private static void logIn() {
         System.out.println("-1. Back to menu (for any inserting)");
         System.out.print("Insert username: ");
         String username = scannerStr.nextLine();
         if (username.equals("-1")) return;
-        System.out.print("Insert password: ");
-        String password = scannerStr.nextLine();
-        if (password.equals("-1")) return;
+        String password = passwordChecker();
+        if(password.equals("-1")) return;
+
         UserBean user = new UserBean(username, password);
         UserResource resource = new UserResource();
         ApiResponse response = resource.getUser(user);
